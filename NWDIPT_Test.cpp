@@ -1,6 +1,6 @@
 /*
 Nick Spizzirri
-9/29/2024
+10/19/2024
 CSC122
 */
 
@@ -10,13 +10,38 @@ CSC122
 #include "NWDIPT.h"
 #include<cassert>
 
+int findstuff(string str, char chr, bool caseSensitive = true, int startPos = 0);
+int findstuff(string str, string pattern, bool caseSensitive = true, int startPos = 0);
+
 int main() {
-	// Series of asserts to test various inputs
-	assert(findstuff("1234567890", '1') == 0);
-	assert(findstuff("1234567890", '2') == 1);
-	assert(findstuff("1234567890", "a") == -1);
-	assert(findstuff("1234567890", "234") == 1);
-	assert(findstuff("1234567890", "12") == 0);
-	assert(findstuff("1234567890", "543") == -1);
-	return 0;
+    assert(findstuff("hello", 'h') == 0);
+    assert(findstuff("hello", 'o') == 4);
+    assert(findstuff("hello", 'x') == -1);
+    assert(findstuff("hello", 'H', true) == -1);
+    assert(findstuff("hello", 'H', false) == 0);
+    assert(findstuff("hello", 'l', true, 3) == 3);
+    assert(findstuff("hello", 'l', true, 4) == -1);
+    assert(findstuff("hello world", "hello") == 0);
+    assert(findstuff("hello world", "world") == 6);
+    assert(findstuff("hello world", "xyz") == -1);
+    assert(findstuff("Hello World", "hello", true) == -1);
+    assert(findstuff("Hello World", "hello", false) == 0);
+    assert(findstuff("hello world", "world", true, 6) == 6);
+    assert(findstuff("hello world", "world", true, 7) == -1);
+    assert(findstuff("hello world", "h?llo") == 0);
+    assert(findstuff("hello world", "w?rld") == 6);
+    assert(findstuff("hello world", "h*o") == 0);
+    assert(findstuff("hello world", "h*d") == 0);
+    assert(findstuff("hello world", "h*world") == 0);
+    assert(findstuff("hello world", "*") == 0);
+    assert(findstuff("hello world", "*w*o*") == 0);
+    assert(findstuff("hello*world", "hello\\*world") == 0);
+    assert(findstuff("hello?world", "hello\\?world") == 0);
+    assert(findstuff("hello\\world", "hello\\\\world") == 0);
+    assert(findstuff("", 'h') == -1);
+    assert(findstuff("", "hello") == -1);
+    assert(findstuff("hello", "") == 0);
+    assert(findstuff("hello", "hello", true, 100) == -1);
+    assert(findstuff("a*b", "a\\*b") == 0);
+    cout << "All tests passed successfully!" << endl;
 }
